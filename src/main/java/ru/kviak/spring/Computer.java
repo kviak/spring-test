@@ -10,14 +10,13 @@ public class Computer {
 
     @Autowired
     public Computer(MusicPlayer musicPlayer) {
-        System.out.println("Computer");
         this.id = 1;
         this.musicPlayer = musicPlayer;
     }
 
     @Override
     public String toString() {
-        return "Computer " + id + " " + musicPlayer.playMusic();
+        return "Computer " + id + " " + musicPlayer.playMusic(MusicType.RAP);
 
     }
 }
