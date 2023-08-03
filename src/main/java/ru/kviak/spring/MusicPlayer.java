@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-@Component
+import java.util.ArrayList;
+
+
 public class MusicPlayer {
-    private final Music music1, music2, music3;
+    private ArrayList<Music> musicTypeList = new ArrayList<>();
     @Value("${musicPlayer.name}")
     private String name;
     @Value("${musicPlayer.volume}")
@@ -21,21 +23,12 @@ public class MusicPlayer {
         return volume;
     }
 
-    public MusicPlayer(@Qualifier("rockMusic")Music music1, @Qualifier("rapMusic") Music music2, @Qualifier("classicalMusic")Music music3 ) {
-        this.music1 = music1;
-        this.music2 = music2;
-        this.music3 = music3;
+    public MusicPlayer(MusicTypes musicTypes) {
+        this.musicTypeList = musicTypes.getMusicTypeList();
     }
 
-    public String playMusic(MusicType type){
-        switch (type) {
-            case ROCK -> { return ": " + music1.getSong() + " ("+type+")" + " Player name:" + " " + name + ", Volume: " + volume;
-            }
-            case RAP -> { return  ": " + music2.getSong() + " ("+type+")"+ " Player name:" + " " + name + ", Volume: " + volume;
-            }
-            case CLASSICAL -> { return  ": " + music3.getSong() + " ("+type+")"+ " Player name:" + " " + name + ", Volume: " + volume;
-            }
-        }
-        return ": nothing play"+ " Player name:" + " " + name + ", Volume: " + volume;
+    public String playMusic(){
+        Music music = musicTypeList.get((int) (Math.random() * 3));
+        return ": " + music.getSong() +" " + music.getType() + " Player name:" + " " + name + ", Volume: " + volume;
     }
 }

@@ -2,4 +2,5 @@ package ru.kviak.spring;
 
 public interface Music {
     String getSong();
+    String getType();
 }
